@@ -1,10 +1,28 @@
-import 'package:bluff/bluff.dart';
-import 'package:bluff/src/widgets/theme.dart';
+import 'package:bluff/app.dart';
+import 'package:bluff/base/basic_types.dart';
+import 'package:bluff/base/border_radius.dart';
+import 'package:bluff/base/color.dart';
+import 'package:bluff/base/decoration.dart';
+import 'package:bluff/base/edge_insets.dart';
+import 'package:bluff/base/geometry.dart';
+import 'package:bluff/base/image.dart';
+import 'package:bluff/base/text.dart';
+import 'package:bluff/build_context.dart';
+import 'package:bluff/widgets/click.dart';
+import 'package:bluff/widgets/container.dart';
+import 'package:bluff/widgets/flex.dart';
+import 'package:bluff/widgets/image.dart';
+import 'package:bluff/widgets/localizations.dart';
+import 'package:bluff/widgets/media_query.dart';
+import 'package:bluff/widgets/padding.dart';
+import 'package:bluff/widgets/text.dart';
+import 'package:bluff/widgets/theme.dart';
+import 'package:bluff/widgets/widget.dart';
 
 final homeRoute = Route(
   title: (context) {
     final locale = Localizations.localeOf(context);
-    if (locale.languageCode == 'fr') return 'Accueil';
+    if (locale!.languageCode == 'fr') return 'Accueil';
     return 'Home';
   },
   relativeUrl: 'index',
@@ -12,6 +30,8 @@ final homeRoute = Route(
 );
 
 class Home extends StatelessWidget {
+  const Home();
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -20,11 +40,9 @@ class Home extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Flex(
-          direction: mediaQuery.size == MediaSize.small
-              ? Axis.vertical
-              : Axis.horizontal,
+          direction: mediaQuery!.size == MediaSize.small ? Axis.vertical : Axis.horizontal,
           children: <Widget>[
-            Expanded(
+            const Expanded(
               child: Container(
                 height: 300,
                 decoration: BoxDecoration(
@@ -34,7 +52,7 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.all(20),
               child: Text('Hello world!'),
             ),
@@ -45,8 +63,8 @@ class Home extends StatelessWidget {
                 color: const Color(0xFF0000FF),
                 borderRadius: BorderRadius.circular(5),
                 boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xAA0000FF),
+                  const BoxShadow(
+                    color: Color(0xAA0000FF),
                     blurRadius: 10,
                     offset: Offset(10, 10),
                   ),
@@ -64,19 +82,15 @@ class Home extends StatelessWidget {
                 return Container(
                   child: Text(
                     'Button',
-                    style: theme.text.paragraph.merge(
+                    style: theme!.text.paragraph.merge(
                       TextStyle(
-                        color: state == ClickState.hover
-                            ? const Color(0xFFFFFFFF)
-                            : const Color(0xFF0000FF),
+                        color: state == ClickState.hover ? const Color(0xFFFFFFFF) : const Color(0xFF0000FF),
                       ),
                     ),
                   ),
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: state == ClickState.hover
-                        ? const Color(0xFF0000FF)
-                        : const Color(0x440000FF),
+                    color: state == ClickState.hover ? const Color(0xFF0000FF) : const Color(0x440000FF),
                     borderRadius: BorderRadius.circular(5),
                   ),
                 );

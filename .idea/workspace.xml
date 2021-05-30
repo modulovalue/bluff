@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ff3ca978-60a8-4dde-9464-5fe2087bfbe8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/example/a.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/html.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analysis_options.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/analysis_options.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/bluff_example.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/bluff_example.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/routes/home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/routes/home.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bluff.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/assets.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/assets.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/base/basic_types.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/base/basic_types.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/base/border_radius.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/base/border_radius.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/base/borders.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/base/borders.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/base/box_border.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/base/box_border.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/base/color.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/base/color.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/base/decoration.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/base/decoration.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/base/edge_insets.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/base/edge_insets.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/base/geometry.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/base/geometry.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/base/hash_values.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/base/hash_values.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/base/image.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/base/image.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/base/keys.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/base/keys.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/base/lerp.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/base/lerp.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/base/locale.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/base/locale.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/base/text.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/base/text.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/build_context.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/build_context.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/helpers/css_base.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/helpers/css_base.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/helpers/css_reset.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/helpers/css_reset.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/publish.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/publish.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/widgets/click.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/click.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/widgets/constrained_box.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/constrained_box.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/widgets/container.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/container.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/widgets/decorated_box.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/decorated_box.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/widgets/flex.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/flex.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/widgets/image.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/image.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/widgets/link.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/link.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/widgets/localizations.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/localizations.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/widgets/media_query.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/media_query.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/widgets/padding.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/padding.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/widgets/provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/provider.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/widgets/sized_box.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/sized_box.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/widgets/text.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/text.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/widgets/theme.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/theme.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/widgets/widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="w0jhphvb" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1tCNIARvQ1S79CaywmYjhhgHEKd" />
+  <component name="ProjectViewState">
+    <option name="abbreviatePackageNames" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="bluff_example.dart" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/example/bluff_example.dart" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Dart Command Line App.bluff_example.dart" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.md" />
+  </component>
+</project>
