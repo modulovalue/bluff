@@ -2,7 +2,7 @@ import 'package:bluff/base/keys.dart';
 
 import '../build_context.dart';
 import '../html.dart' as html;
-import 'widget.dart';
+import '../resolve_url.dart';
 
 enum ClickState {
   inactive,
@@ -10,23 +10,24 @@ enum ClickState {
   active,
 }
 
-class Click extends Widget {
+class Click with WidgetMixin {
   final String url;
-  final WidgetValueBuilder<ClickState> builder;
+  final Widget Function(BuildContext context, ClickState value) builder;
   final bool newTab;
+  final Key? key;
 
-  Click({
+  const Click({
     this.newTab = false,
     required this.url,
     required this.builder,
-    Key? key,
-  }) : super(key: key);
+    this.key,
+  });
 
   @override
   html.HtmlElement renderHtml(BuildContext context) {
     final result = html.AnchorElement();
     result.className = 'click';
-    result.href = context.resolveUrl(url);
+    result.href = resolveUrl(context, url);
     if (newTab) {
       result.target = '_blank';
     }

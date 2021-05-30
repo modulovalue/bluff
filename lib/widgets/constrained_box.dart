@@ -1,19 +1,19 @@
 import 'package:bluff/base/keys.dart';
-import '../html.dart' as html;
 
 import '../build_context.dart';
-import 'widget.dart';
+import '../html.dart' as html;
 
-class ConstrainedBox extends Widget {
+class ConstrainedBox with WidgetMixin {
   /// The additional constraints to impose on the child.
   final BoxConstraints? constraints;
   final Widget? child;
+  final Key? key;
 
   const ConstrainedBox({
     required this.child,
     this.constraints,
-    Key? key,
-  }) : super(key: key);
+    this.key,
+  });
 
   @override
   html.CssStyleDeclaration renderCss(BuildContext context) {

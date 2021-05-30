@@ -5,18 +5,19 @@ import 'package:bluff/base/keys.dart';
 import '../html.dart' as html;
 
 import '../build_context.dart';
+import '../resolve_url.dart';
 import 'flex.dart';
-import 'widget.dart';
 
-class DecoratedBox extends Widget {
+class DecoratedBox with WidgetMixin {
   final Widget? child;
   final BoxDecoration? decoration;
+  final Key? key;
 
   const DecoratedBox({
-    Key? key,
     this.child,
     this.decoration,
-  }) : super(key: key);
+    this.key,
+  });
 
   @override
   html.CssStyleDeclaration renderCss(BuildContext context) {
@@ -27,7 +28,7 @@ class DecoratedBox extends Widget {
       final _color = decoration!.color!.toCss();
       style.backgroundColor = _color;
     } else if (decoration?.image != null) {
-      style.backgroundImage = 'url(' + context.resolveUrl(decoration!.image!.image.url) + ')';
+      style.backgroundImage = 'url(' + resolveUrl(context, decoration!.image!.image.url) + ')';
     }
 
     if (decoration != null) {

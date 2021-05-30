@@ -1,10 +1,16 @@
-import 'package:bluff/widgets/widget.dart';
-import 'package:path/path.dart' as path;
-import '../html.dart' as html;
-
 import '../assets.dart';
+import '../html.dart' as html;
 import 'base/keys.dart';
-import 'widgets/media_query.dart';
+
+abstract class Widget {
+  Key? get key;
+
+  html.HtmlElement render(BuildContext context);
+
+  html.HtmlElement renderHtml(BuildContext context);
+
+  html.CssStyleDeclaration? renderCss(BuildContext context);
+}
 
 class BuildContext {
   static int lastKeyIndex = 0;
@@ -17,15 +23,12 @@ class BuildContext {
     Map<String, html.CssStyleDeclaration>? styles,
   }) : styles = styles ?? <String, html.CssStyleDeclaration>{};
 
-  BuildContext withInherited(InheritedWidget widget) {
-    final result = BuildContext(
-      styles: styles,
-      assets: assets,
-    );
-    result._inheritedWidgets.addAll(_inheritedWidgets);
-    result._inheritedWidgets[widget.runtimeType] = widget;
-    return result;
-  }
+  BuildContext withInherited(InheritedWidget widget) => BuildContext(
+        styles: styles,
+        assets: assets,
+      )
+        .._inheritedWidgets.addAll(_inheritedWidgets)
+        .._inheritedWidgets[widget.runtimeType] = widget;
 
   Key createDefaultKey() => Key('_w${lastKeyIndex++}');
 
@@ -36,17 +39,65 @@ class BuildContext {
     );
     return _inheritedWidgets[T] as T?;
   }
+}
 
-  String resolveUrl(String url) {
-    if (url.startsWith('asset://')) {
-      return path.join(assets.local.path, url.replaceAll('asset://', ''));
+abstract class InheritedWidget with WidgetMixin {
+  final Widget child;
+  final Key? key;
+
+  const InheritedWidget({
+    required this.child,
+    this.key,
+  });
+
+  @override
+  html.HtmlElement renderHtml(BuildContext context) => child.render(context);
+
+  @override
+  html.HtmlElement render(BuildContext context) => super.render(context.withInherited(this));
+}
+
+mixin WidgetMixin implements Widget {
+  @override
+  html.HtmlElement render(BuildContext context) {
+    final widget = this;
+    final css = widget.renderCss(context);
+    final html = widget.renderHtml(context);
+    final k = widget.key;
+    if (k != null) {
+      final media = MediaQuery.of(context);
+      html.id = k.className + '-${media!.size.index}';
     }
+    final key = context.createDefaultKey();
+    html.className = html.className! + (html.className!.isEmpty ? '' : ' ') + key.className;
+    if (css != null) context.styles[key.className] = css;
+    return html;
+  }
 
-    if (url.startsWith('#')) {
-      final media = MediaQuery.of(this);
-      return url + '-${media!.size.index}';
-    }
+  @override
+  html.CssStyleDeclaration? renderCss(BuildContext context) => null;
+}
 
-    return url;
+class MediaQuery extends InheritedWidget {
+  final MediaQueryData data;
+
+  const MediaQuery({
+    required Widget child,
+    required this.data,
+    Key? key,
+  }) : super(key: key, child: child);
+
+  static MediaQueryData? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<MediaQuery>()?.data;
   }
 }
+
+class MediaQueryData {
+  final MediaSize size;
+
+  const MediaQueryData({
+    required this.size,
+  });
+}
+
+enum MediaSize { xsmall, small, medium, large, xlarge }

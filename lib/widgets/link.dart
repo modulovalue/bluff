@@ -26,7 +26,6 @@ class TextLink extends StatelessWidget {
       url: url,
       builder: (context, state) {
         TextStyle style;
-
         switch (state) {
           case ClickState.active:
             style = activeStyle ?? hoverStyle ?? inactiveStyle;
@@ -38,7 +37,6 @@ class TextLink extends StatelessWidget {
             style = inactiveStyle;
             break;
         }
-
         return Text(
           title,
           style: style,

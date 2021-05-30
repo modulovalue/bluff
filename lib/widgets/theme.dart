@@ -5,7 +5,6 @@ import 'package:bluff/widgets/provider.dart';
 import 'package:bluff/widgets/widget.dart';
 
 import '../build_context.dart';
-import 'media_query.dart';
 
 class Theme extends StatelessWidget {
   final ThemeData? data;

@@ -2,19 +2,19 @@ import 'package:bluff/base/keys.dart';
 import '../html.dart' as html;
 
 import '../build_context.dart';
-import 'widget.dart';
 
-class SizedBox extends Widget {
+class SizedBox with WidgetMixin {
   final Widget? child;
   final double? width;
   final double? height;
+  final Key? key;
 
   const SizedBox({
     this.child,
     this.width,
     this.height,
-    Key? key,
-  }) : super(key: key);
+    this.key,
+  });
 
   @override
   html.CssStyleDeclaration renderCss(BuildContext context) {

@@ -1,9 +1,8 @@
 import 'package:bluff/base/basic_types.dart';
 import 'package:bluff/base/keys.dart';
-import '../html.dart' as html;
 
 import '../build_context.dart';
-import 'widget.dart';
+import '../html.dart' as html;
 
 class Column extends Flex {
   const Column({
@@ -41,12 +40,13 @@ class Row extends Flex {
         );
 }
 
-class Flex extends Widget {
+class Flex with WidgetMixin {
   final Axis direction;
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
   final List<Widget>? children;
+  final Key? key;
 
   const Flex({
     required this.direction,
@@ -54,8 +54,8 @@ class Flex extends Widget {
     this.mainAxisSize = MainAxisSize.max,
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.children = const <Widget>[],
-    Key? key,
-  }) : super(key: key);
+    this.key,
+  });
 
   @override
   html.HtmlElement render(BuildContext context) {
@@ -131,7 +131,7 @@ class Flex extends Widget {
   }
 }
 
-class Flexible extends Widget {
+class Flexible with WidgetMixin {
   final Widget child;
 
   /// The flex factor to use for this child
@@ -150,15 +150,14 @@ class Flexible extends Widget {
   /// fit is [FlexFit.loose], the child can be at most as large as the available
   /// space (but is allowed to be smaller).
   final FlexFit fit;
+  final Key? key;
 
   const Flexible({
     required this.child,
     this.flex = 1,
     this.fit = FlexFit.loose,
-    Key? key,
-  }) : super(
-          key: key,
-        );
+    this.key,
+  });
 
   @override
   html.HtmlElement renderHtml(BuildContext context) {

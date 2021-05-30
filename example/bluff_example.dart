@@ -1,7 +1,7 @@
 import 'package:bluff/app.dart';
 import 'package:bluff/base/locale.dart';
+import 'package:bluff/build_context.dart';
 import 'package:bluff/publish.dart';
-import 'package:bluff/widgets/media_query.dart';
 
 import 'routes/home.dart';
 

@@ -1,14 +1,12 @@
-import '../html.dart' as html;
-
 import '../base/color.dart';
 import '../base/keys.dart';
 import '../base/locale.dart';
 import '../base/text.dart';
 import '../build_context.dart';
+import '../html.dart' as html;
 import 'theme.dart';
-import 'widget.dart';
 
-class Text extends Widget {
+class Text with WidgetMixin {
   /// Creates a text widget.
   ///
   /// If the [style] argument is null, the text will use the style from the
@@ -17,7 +15,6 @@ class Text extends Widget {
   /// The [data] parameter must not be null.
   const Text(
     this.data, {
-    Key? key,
     this.style,
     this.strutStyle,
     this.textAlign,
@@ -27,7 +24,10 @@ class Text extends Widget {
     this.overflow,
     this.textScaleFactor,
     this.maxLines,
-  }) : super(key: key);
+    this.key,
+  });
+
+  final Key? key;
 
   /// The text to display.
   ///

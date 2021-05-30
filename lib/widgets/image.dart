@@ -1,25 +1,26 @@
 import 'package:bluff/base/image.dart';
 import 'package:bluff/base/keys.dart';
-import '../html.dart' as html;
 
 import '../build_context.dart';
-import 'widget.dart';
+import '../html.dart' as html;
+import '../resolve_url.dart';
 
-class Image extends Widget {
+class Image with WidgetMixin {
   final ImageProvider image;
   final double? width;
   final double? height;
   final BoxFit fit;
   final String? semanticsLabel;
+  final Key? key;
 
   const Image({
     required this.image,
-    Key? key,
+    this.key,
     this.fit = BoxFit.cover,
     this.width,
     this.height,
     this.semanticsLabel,
-  }) : super(key: key);
+  });
 
   Image.network(
     String url, {
@@ -82,7 +83,7 @@ class Image extends Widget {
   @override
   html.HtmlElement renderHtml(BuildContext context) {
     final result = html.ImageElement();
-    result.src = context.resolveUrl(image.url);
+    result.src = resolveUrl(context, image.url);
     if (semanticsLabel != null) {
       result.alt = semanticsLabel;
     }

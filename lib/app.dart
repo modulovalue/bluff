@@ -1,11 +1,10 @@
 import '../html.dart' as html;
-
+import 'base/keys.dart';
 import 'base/locale.dart';
 import 'build_context.dart';
 import 'helpers/css_base.dart';
 import 'helpers/css_reset.dart';
 import 'widgets/localizations.dart';
-import 'widgets/media_query.dart';
 import 'widgets/theme.dart';
 import 'widgets/widget.dart';
 
@@ -43,7 +42,7 @@ typedef ApplicationPlugin = void Function(
 
 typedef ApplicationThemeBuilder = ThemeData Function(BuildContext context);
 
-class Application extends Widget {
+class Application with WidgetMixin {
   final String? currentRoute;
   final List<Route> routes;
   final List<MediaSize> availableSizes;
@@ -53,8 +52,9 @@ class Application extends Widget {
   final List<String> stylesheetLinks;
   final List<String> scriptLinks;
   final ApplicationThemeBuilder? theme;
-  final WidgetChildBuilder? builder;
+  final Widget Function(BuildContext context, Widget child)? builder;
   final PostRenderAction? postRender;
+  final Key? key = null;
 
   /// This list collectively defines the localized resources objects that can
   /// be retrieved with [Localizations.of].
@@ -184,10 +184,11 @@ class Application extends Widget {
 
 typedef TitleBuilder = String Function(BuildContext context);
 
-class Route extends Widget {
+class Route with WidgetMixin {
   final TitleBuilder title;
   final String relativeUrl;
-  final WidgetBuilder builder;
+  final Widget Function(BuildContext context) builder;
+  final Key? key = null;
 
   const Route({
     required this.title,

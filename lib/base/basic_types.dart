@@ -162,9 +162,11 @@ enum AxisDirection {
 Axis axisDirectionToAxis(AxisDirection axisDirection) {
   switch (axisDirection) {
     case AxisDirection.up:
+      return Axis.vertical;
     case AxisDirection.down:
       return Axis.vertical;
     case AxisDirection.left:
+      return Axis.horizontal;
     case AxisDirection.right:
       return Axis.horizontal;
   }
@@ -213,9 +215,11 @@ AxisDirection flipAxisDirection(AxisDirection axisDirection) {
 bool axisDirectionIsReversed(AxisDirection axisDirection) {
   switch (axisDirection) {
     case AxisDirection.up:
+      return true;
     case AxisDirection.left:
       return true;
     case AxisDirection.down:
+      return false;
     case AxisDirection.right:
       return false;
   }

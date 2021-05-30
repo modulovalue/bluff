@@ -13,7 +13,6 @@ import 'package:bluff/widgets/container.dart';
 import 'package:bluff/widgets/flex.dart';
 import 'package:bluff/widgets/image.dart';
 import 'package:bluff/widgets/localizations.dart';
-import 'package:bluff/widgets/media_query.dart';
 import 'package:bluff/widgets/padding.dart';
 import 'package:bluff/widgets/text.dart';
 import 'package:bluff/widgets/theme.dart';
@@ -78,23 +77,21 @@ class Home extends StatelessWidget {
             Click(
               newTab: true,
               url: 'https://www.google.com',
-              builder: (context, state) {
-                return Container(
-                  child: Text(
-                    'Button',
-                    style: theme!.text.paragraph.merge(
-                      TextStyle(
-                        color: state == ClickState.hover ? const Color(0xFFFFFFFF) : const Color(0xFF0000FF),
-                      ),
+              builder: (context, state) => Container(
+                child: Text(
+                  'Button',
+                  style: theme!.text.paragraph.merge(
+                    TextStyle(
+                      color: state == ClickState.hover ? const Color(0xFFFFFFFF) : const Color(0xFF0000FF),
                     ),
                   ),
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: state == ClickState.hover ? const Color(0xFF0000FF) : const Color(0x440000FF),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                );
-              },
+                ),
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: state == ClickState.hover ? const Color(0xFF0000FF) : const Color(0x440000FF),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
             )
           ],
         )

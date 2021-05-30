@@ -3,17 +3,17 @@ import 'package:bluff/base/keys.dart';
 import '../html.dart' as html;
 
 import '../build_context.dart';
-import 'widget.dart';
 
-class Padding extends Widget {
+class Padding with WidgetMixin {
   final Widget? child;
   final EdgeInsets? padding;
+  final Key? key;
 
   const Padding({
     this.child,
     this.padding,
-    Key? key,
-  }) : super(key: key);
+    this.key,
+  });
 
   @override
   html.CssStyleDeclaration renderCss(BuildContext context) {
