@@ -2,12 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:bluff/base/text.dart';
-
 import 'basic_types.dart';
 import 'geometry.dart';
 import 'hash_values.dart';
 import 'lerp.dart';
+import 'text.dart';
 
 /// Base class for [EdgeInsets] that allows for text-direction aware
 /// resolution.
@@ -21,7 +20,7 @@ import 'lerp.dart';
 ///
 /// See also:
 ///
-///  * [Padding], a widget that describes margins using [EdgeInsetsGeometry].
+///  * Padding, a widget that describes margins using [EdgeInsetsGeometry].
 abstract class EdgeInsetsGeometry {
   /// Abstract const constructor. This constructor enables subclasses to provide
   /// const constructors so that they can be used in const expressions.
@@ -246,7 +245,8 @@ abstract class EdgeInsetsGeometry {
   @override
   bool operator ==(dynamic other) {
     if (other is! EdgeInsetsGeometry) return false;
-    return other is EdgeInsetsGeometry && _left == other._left &&
+    return other is EdgeInsetsGeometry &&
+        _left == other._left &&
         _right == other._right &&
         _start == other._start &&
         _end == other._end &&
@@ -268,7 +268,7 @@ abstract class EdgeInsetsGeometry {
 /// [TextDirection]. To support both left-to-right and right-to-left layouts,
 /// consider using [EdgeInsetsDirectional], which is expressed in terms of
 /// _start_, top, _end_, and bottom, where start and end are resolved in terms
-/// of a [TextDirection] (typically obtained from the ambient [Directionality]).
+/// of a [TextDirection] (typically obtained from the ambient Directionality).
 ///
 /// {@tool sample}
 ///
@@ -299,7 +299,7 @@ abstract class EdgeInsetsGeometry {
 ///
 /// See also:
 ///
-///  * [Padding], a widget that accepts [EdgeInsets] to describe its margins.
+///  * Padding, a widget that accepts [EdgeInsets] to describe its margins.
 ///  * [EdgeInsetsDirectional], which (for properties and arguments that accept
 ///    the type [EdgeInsetsGeometry]) allows the horizontal insets to be
 ///    specified in a [TextDirection]-aware manner.

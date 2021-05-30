@@ -13,14 +13,19 @@ const _HashEnd _hashEnd = _HashEnd();
 // Borrowed from the dart sdk: sdk/lib/math/jenkins_smi_hash.dart.
 class _Jenkins {
   static int combine(int hash, Object? o) {
+    // ignore: prefer_asserts_with_message
     assert(o is! Iterable);
+    // ignore: parameter_assignments
     hash = 0x1fffffff & (hash + o.hashCode);
+    // ignore: parameter_assignments
     hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
     return hash ^ (hash >> 6);
   }
 
   static int finish(int hash) {
+    // ignore: parameter_assignments
     hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
+    // ignore: parameter_assignments
     hash = hash ^ (hash >> 11);
     return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
   }

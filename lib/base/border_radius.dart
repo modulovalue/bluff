@@ -2,10 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:bluff/base/text.dart';
-
 import 'geometry.dart';
 import 'hash_values.dart';
+import 'text.dart';
 
 /// Base class for [BorderRadius] that allows for text-direction aware resolution.
 ///
@@ -137,7 +136,9 @@ abstract class BorderRadiusGeometry {
   /// {@macro dart.ui.shadow.lerp}
   static BorderRadiusGeometry? lerp(BorderRadiusGeometry? a, BorderRadiusGeometry? b, double t) {
     if (a == null && b == null) return null;
+    // ignore: parameter_assignments
     a ??= BorderRadius.zero;
+    // ignore: parameter_assignments
     b ??= BorderRadius.zero;
     return a.add((b.subtract(a)) * t);
   }
@@ -262,13 +263,13 @@ abstract class BorderRadiusGeometry {
 
 /// An immutable set of radii for each corner of a rectangle.
 ///
-/// Used by [BoxDecoration] when the shape is a [BoxShape.rectangle].
+/// Used by BoxDecoration when the shape is a BoxShape.rectangle.
 ///
 /// The [BorderRadius] class specifies offsets in terms of visual corners, e.g.
 /// [topLeft]. These values are not affected by the [TextDirection]. To support
 /// both left-to-right and right-to-left layouts, consider using
 /// [BorderRadiusDirectional], which is expressed in terms that are relative to
-/// a [TextDirection] (typically obtained from the ambient [Directionality]).
+/// a [TextDirection] (typically obtained from the ambient Directionality).
 class BorderRadius extends BorderRadiusGeometry {
   /// Creates a border radius where all radii are [radius].
   const BorderRadius.all(Radius radius)
@@ -541,7 +542,7 @@ class BorderRadiusDirectional extends BorderRadiusGeometry {
 
   /// A border radius with all zero radii.
   ///
-  /// Consider using [EdgeInsets.zero] instead, since that object has the same
+  /// Consider using EdgeInsets.zero instead, since that object has the same
   /// effect, but will be cheaper to [resolve].
   static const BorderRadiusDirectional zero = BorderRadiusDirectional.all(Radius.zero);
 

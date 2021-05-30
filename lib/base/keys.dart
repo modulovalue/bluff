@@ -1,5 +1,10 @@
-class Key {
+abstract class Key {
+  String get className;
+}
+
+class KeyImpl implements Key {
+  @override
   final String className;
 
-  const Key(this.className);
+  const KeyImpl(this.className);
 }

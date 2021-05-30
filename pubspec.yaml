@@ -4,11 +4,10 @@ version: 0.1.11
 homepage: https://github.com/aloisdeniel/bluff
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=2.12.0-0 <3.0.0'
 
 dependencies:
   universal_html: ^2.0.8
-  path: ^1.6.4
 
 dev_dependencies:
   extra_pedantic: ^1.5.0

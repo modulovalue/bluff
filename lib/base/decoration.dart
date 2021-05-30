@@ -14,7 +14,7 @@ import 'image.dart';
 ///
 /// The box has a [border], a body, and may cast a [boxShadow].
 ///
-/// The [shape] of the box can be a circle or a rectangle. If it is a rectangle,
+/// The shape of the box can be a circle or a rectangle. If it is a rectangle,
 /// then the [borderRadius] property controls the roundness of the corners.
 ///
 /// The body of the box is painted in layers. The bottom-most layer is the
@@ -26,7 +26,7 @@ import 'image.dart';
 ///
 /// {@tool sample}
 ///
-/// The following applies a [BoxDecoration] to a [Container] widget to draw an
+/// The following applies a [BoxDecoration] to a Container widget to draw an
 /// [image] of an owl with a thick black [border] and rounded corners.
 ///
 /// ![](https://flutter.github.io/assets-for-api-docs/assets/painting/box_decoration.png)
@@ -50,18 +50,18 @@ import 'image.dart';
 /// {@end-tool}
 ///
 /// {@template flutter.painting.boxDecoration.clip}
-/// The [shape] or the [borderRadius] won't clip the children of the
-/// decorated [Container]. If the clip is required, insert a clip widget
-/// (e.g., [ClipRect], [ClipRRect], [ClipPath]) as the child of the [Container].
+/// The shape or the [borderRadius] won't clip the children of the
+/// decorated Container. If the clip is required, insert a clip widget
+/// (e.g., ClipRect, ClipRRect, ClipPath) as the child of the Container.
 /// Be aware that clipping may be costly in terms of performance.
 /// {@endtemplate}
 ///
 /// See also:
 ///
-///  * [DecoratedBox] and [Container], widgets that can be configured with
+///  * DecoratedBox and Container, widgets that can be configured with
 ///    [BoxDecoration] objects.
-///  * [CustomPaint], a widget that lets you draw arbitrary graphics.
-///  * [Decoration], the base class which lets you define other decorations.
+///  * CustomPaint, a widget that lets you draw arbitrary graphics.
+///  * Decoration, the base class which lets you define other decorations.
 class BoxDecoration {
   /// Creates a box decoration.
   ///
@@ -69,13 +69,13 @@ class BoxDecoration {
   /// * If [image] is null, this decoration does not paint a background image.
   /// * If [border] is null, this decoration does not paint a border.
   /// * If [borderRadius] is null, this decoration uses more efficient background
-  ///   painting commands. The [borderRadius] argument must be null if [shape] is
+  ///   painting commands. The [borderRadius] argument must be null if shape is
   ///   [BoxShape.circle].
   /// * If [boxShadow] is null, this decoration does not paint a shadow.
   /// * If [gradient] is null, this decoration does not paint gradients.
-  /// * If [backgroundBlendMode] is null, this decoration paints with [BlendMode.srcOver]
+  /// * If backgroundBlendMode is null, this decoration paints with BlendMode.srcOver
   ///
-  /// The [shape] argument must not be null.
+  /// The shape argument must not be null.
   const BoxDecoration({
     this.color,
     this.image,
@@ -110,7 +110,7 @@ class BoxDecoration {
 
   /// The color to fill in the background of the box.
   ///
-  /// The color is filled into the [shape] of the box (e.g., either a rectangle,
+  /// The color is filled into the shape of the box (e.g., either a rectangle,
   /// potentially with a [borderRadius], or a circle).
   ///
   /// This is ignored if [gradient] is non-null.
@@ -120,14 +120,14 @@ class BoxDecoration {
 
   /// An image to paint above the background [color] or [gradient].
   ///
-  /// If [shape] is [BoxShape.circle] then the image is clipped to the circle's
+  /// If shape is [BoxShape.circle] then the image is clipped to the circle's
   /// boundary; if [borderRadius] is non-null then the image is clipped to the
   /// given radii.
   final DecorationImage? image;
 
   /// A border to draw above the background [color], [gradient], or [image].
   ///
-  /// Follows the [shape] and [borderRadius].
+  /// Follows the shape and [borderRadius].
   ///
   /// Use [Border] objects to describe borders that do not depend on the reading
   /// direction.
@@ -139,7 +139,7 @@ class BoxDecoration {
 
   /// If non-null, the corners of this box are rounded by this [BorderRadius].
   ///
-  /// Applies only to boxes with rectangular shapes; ignored if [shape] is not
+  /// Applies only to boxes with rectangular shapes; ignored if shape is not
   /// [BoxShape.rectangle].
   ///
   /// {@macro flutter.painting.boxDecoration.clip}
@@ -147,13 +147,13 @@ class BoxDecoration {
 
   /// A list of shadows cast by this box behind the box.
   ///
-  /// The shadow follows the [shape] of the box.
+  /// The shadow follows the shape of the box.
   ///
   /// See also:
   ///
-  ///  * [kElevationToShadow], for some predefined shadows used in Material
+  ///  * kElevationToShadow, for some predefined shadows used in Material
   ///    Design.
-  ///  * [PhysicalModel], a widget for showing shadows.
+  ///  * PhysicalModel, a widget for showing shadows.
   final List<BoxShadow> boxShadow;
 
   /// A gradient to use when filling the box.
@@ -174,24 +174,27 @@ class BoxDecoration {
         boxShadow == other.boxShadow &&
         gradient == other.gradient;
   }
+
+  @override
+  int get hashCode => throw Exception("Unsupported");
 }
 
 abstract class Gradient {
   /// Initialize the gradient's colors and stops.
   ///
   /// The [colors] argument must not be null, and must have at least two colors
-  /// (the length is not verified until the [createShader] method is called).
+  /// (the length is not verified until the createShader method is called).
   ///
   /// If specified, the [stops] argument must have the same number of entries as
-  /// [colors] (this is also not verified until the [createShader] method is
+  /// [colors] (this is also not verified until the createShader method is
   /// called).
   ///
-  /// The [transform] argument can be applied to transform _only_ the gradient,
+  /// The transform argument can be applied to transform _only_ the gradient,
   /// without rotating the canvas itself or other geometry on the canvas. For
-  /// example, a `GradientRotation(math.pi/4)` will result in a [SweepGradient]
+  /// example, a `GradientRotation(math.pi/4)` will result in a SweepGradient
   /// that starts from a position of 6 o'clock instead of 3 o'clock, assuming
   /// no other rotation or perspective transformations have been applied to the
-  /// [Canvas]. If null, no transformation is applied.
+  /// Canvas. If null, no transformation is applied.
   const Gradient({
     required this.colors,
     required this.stops,

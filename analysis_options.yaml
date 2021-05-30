@@ -1,6 +1,1 @@
 include: package:extra_pedantic/analysis_options.yaml
-
-linter:
-  rules:
-    ignore:
-      - comment_references

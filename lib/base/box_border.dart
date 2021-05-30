@@ -7,33 +7,30 @@ import 'color.dart';
 import 'edge_insets.dart';
 import 'hash_values.dart';
 
-// Examples can assume:
-// BuildContext context;
-
-/// The shape to use when rendering a [Border] or [BoxDecoration].
+/// The shape to use when rendering a [Border] or BoxDecoration.
 ///
-/// Consider using [ShapeBorder] subclasses directly (with [ShapeDecoration]),
+/// Consider using [ShapeBorder] subclasses directly (with ShapeDecoration),
 /// instead of using [BoxShape] and [Border], if the shapes will need to be
 /// interpolated or animated. The [Border] class cannot interpolate between
 /// different shapes.
 enum BoxShape {
   /// An axis-aligned, 2D rectangle. May have rounded corners (described by a
   /// [BorderRadius]). The edges of the rectangle will match the edges of the box
-  /// into which the [Border] or [BoxDecoration] is painted.
+  /// into which the [Border] or BoxDecoration is painted.
   ///
   /// See also:
   ///
-  ///  * [RoundedRectangleBorder], the equivalent [ShapeBorder].
+  ///  * RoundedRectangleBorder, the equivalent [ShapeBorder].
   rectangle,
 
   /// A circle centered in the middle of the box into which the [Border] or
-  /// [BoxDecoration] is painted. The diameter of the circle is the shortest
+  /// BoxDecoration is painted. The diameter of the circle is the shortest
   /// dimension of the box, either the width or the height, such that the circle
   /// touches the edges of the box.
   ///
   /// See also:
   ///
-  ///  * [CircleBorder], the equivalent [ShapeBorder].
+  ///  * CircleBorder, the equivalent [ShapeBorder].
   circle,
 
   // Don't add more, instead create a new ShapeBorder.
@@ -47,14 +44,14 @@ enum BoxShape {
 /// specifying the sides.
 ///
 /// The only API difference that this class introduces over [ShapeBorder] is
-/// that its [paint] method takes additional arguments.
+/// that its paint method takes additional arguments.
 ///
 /// See also:
 ///
 ///  * [BorderSide], which is used to describe each side of the box.
-///  * [RoundedRectangleBorder], another way of describing a box's border.
-///  * [CircleBorder], another way of describing a circle border.
-///  * [BoxDecoration], which uses a [BoxBorder] to describe its borders.
+///  * RoundedRectangleBorder, another way of describing a box's border.
+///  * CircleBorder, another way of describing a circle border.
+///  * BoxDecoration, which uses a [BoxBorder] to describe its borders.
 abstract class BoxBorder extends ShapeBorder {
   /// Abstract const constructor. This constructor enables subclasses to provide
   /// const constructors so that they can be used in const expressions.
@@ -75,7 +72,7 @@ abstract class BoxBorder extends ShapeBorder {
   /// A uniform border by definition has no text direction dependency and
   /// therefore could be expressed as a [Border], even if it is currently a
   /// [BorderDirectional]. A uniform border can also be expressed as a
-  /// [RoundedRectangleBorder].
+  /// RoundedRectangleBorder.
   bool get isUniform;
 
   // We override this to tighten the return value, so that callers can assume
@@ -213,9 +210,9 @@ abstract class BoxBorder extends ShapeBorder {
 ///
 /// See also:
 ///
-///  * [BoxDecoration], which uses this class to describe its edge decoration.
+///  * BoxDecoration, which uses this class to describe its edge decoration.
 ///  * [BorderSide], which is used to describe each side of the box.
-///  * [Theme], from the material layer, which can be queried to obtain appropriate colors
+///  * Theme, from the material layer, which can be queried to obtain appropriate colors
 ///    to use for borders in a material app, as shown in the "divider" sample above.
 class Border extends BoxBorder {
   /// Creates a border.
@@ -259,9 +256,13 @@ class Border extends BoxBorder {
   ///
   /// The arguments must not be null.
   static Border merge(Border a, Border b) {
+    // ignore: prefer_asserts_with_message
     assert(BorderSide.canMerge(a.top, b.top));
+    // ignore: prefer_asserts_with_message
     assert(BorderSide.canMerge(a.right, b.right));
+    // ignore: prefer_asserts_with_message
     assert(BorderSide.canMerge(a.bottom, b.bottom));
+    // ignore: prefer_asserts_with_message
     assert(BorderSide.canMerge(a.left, b.left));
     return Border(
       top: BorderSide.merge(a.top, b.top),
@@ -392,16 +393,16 @@ class Border extends BoxBorder {
 ///
 /// See also:
 ///
-///  * [BoxDecoration], which uses this class to describe its edge decoration.
+///  * BoxDecoration, which uses this class to describe its edge decoration.
 ///  * [BorderSide], which is used to describe each side of the box.
-///  * [Theme], from the material layer, which can be queried to obtain appropriate colors
+///  * Theme, from the material layer, which can be queried to obtain appropriate colors
 ///    to use for borders in a material app, as shown in the "divider" sample above.
 class BorderDirectional extends BoxBorder {
   /// Creates a border.
   ///
   /// The [start] and [end] sides represent the horizontal sides; the start side
   /// is on the leading edge given the reading direction, and the end side is on
-  /// the trailing edge. They are resolved during [paint].
+  /// the trailing edge. They are resolved during paint.
   ///
   /// All the sides of the border default to [BorderSide.none].
   ///
@@ -421,9 +422,13 @@ class BorderDirectional extends BoxBorder {
   ///
   /// The arguments must not be null.
   static BorderDirectional merge(BorderDirectional a, BorderDirectional b) {
+    // ignore: prefer_asserts_with_message
     assert(BorderSide.canMerge(a.top, b.top));
+    // ignore: prefer_asserts_with_message
     assert(BorderSide.canMerge(a.start, b.start));
+    // ignore: prefer_asserts_with_message
     assert(BorderSide.canMerge(a.end, b.end));
+    // ignore: prefer_asserts_with_message
     assert(BorderSide.canMerge(a.bottom, b.bottom));
     return BorderDirectional(
       top: BorderSide.merge(a.top, b.top),
@@ -443,7 +448,7 @@ class BorderDirectional extends BoxBorder {
   ///
   /// See also:
   ///
-  ///  * [TextDirection], which is used to describe the reading direction.
+  ///  * TextDirection, which is used to describe the reading direction.
   final BorderSide start;
 
   /// The end side of this border.
@@ -453,7 +458,7 @@ class BorderDirectional extends BoxBorder {
   ///
   /// See also:
   ///
-  ///  * [TextDirection], which is used to describe the reading direction.
+  ///  * TextDirection, which is used to describe the reading direction.
   final BorderSide end;
 
   @override
@@ -494,8 +499,8 @@ class BorderDirectional extends BoxBorder {
       if (!BorderSide.canMerge(typedOther.top, top) || !BorderSide.canMerge(typedOther.bottom, bottom)) return null;
       if (start != BorderSide.none || end != BorderSide.none) {
         if (typedOther.left != BorderSide.none || typedOther.right != BorderSide.none) return null;
-        assert(typedOther.left == BorderSide.none);
-        assert(typedOther.right == BorderSide.none);
+        assert(typedOther.left == BorderSide.none, "The given left border can't be none");
+        assert(typedOther.right == BorderSide.none, "The given right border can't be none");
         return BorderDirectional(
           top: BorderSide.merge(typedOther.top, top),
           start: start,
@@ -503,8 +508,8 @@ class BorderDirectional extends BoxBorder {
           bottom: BorderSide.merge(typedOther.bottom, bottom),
         );
       }
-      assert(start == BorderSide.none);
-      assert(end == BorderSide.none);
+      assert(start == BorderSide.none, "The given start border can't be none");
+      assert(end == BorderSide.none, "The given end border can't be none");
       return Border(
         top: BorderSide.merge(typedOther.top, top),
         right: typedOther.right,

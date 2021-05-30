@@ -18,13 +18,12 @@
 //      These are generally wrapped by other APIs so we always refer to them directly
 //      as ui.* to avoid making them seem like high-level APIs.
 
-
-import 'package:bluff/base/text.dart';
+import 'text.dart';
 
 /// The description of the difference between two objects, in the context of how
 /// it will affect the rendering.
 ///
-/// Used by [TextSpan.compareTo] and [TextStyle.compareTo].
+/// Used by TextSpan.compareTo and TextStyle.compareTo.
 ///
 /// The values in this enum are ordered such that they are in increasing order
 /// of cost. A value with index N implies all the values with index less than N.
@@ -44,7 +43,7 @@ enum RenderComparison {
   ///
   /// For example, only the color is changed.
   ///
-  /// [RenderObject.markNeedsPaint] would be necessary to handle this kind of
+  /// RenderObject.markNeedsPaint would be necessary to handle this kind of
   /// change in a render object.
   paint,
 
@@ -54,7 +53,7 @@ enum RenderComparison {
   ///
   /// This is the most drastic level of change possible.
   ///
-  /// [RenderObject.markNeedsLayout] would be necessary to handle this kind of
+  /// RenderObject.markNeedsLayout would be necessary to handle this kind of
   /// change in a render object.
   layout,
 }
@@ -63,7 +62,7 @@ enum RenderComparison {
 ///
 /// The axis is always relative to the current coordinate space. This means, for
 /// example, that a [horizontal] axis might actually be diagonally from top
-/// right to bottom left, due to some local [Transform] applied to the scene.
+/// right to bottom left, due to some local Transform applied to the scene.
 ///
 /// See also:
 ///
@@ -103,11 +102,11 @@ Axis flipAxis(Axis direction) {
 
 /// A direction in which boxes flow vertically.
 ///
-/// This is used by the flex algorithm (e.g. [Column]) to decide in which
+/// This is used by the flex algorithm (e.g. Column) to decide in which
 /// direction to draw boxes.
 ///
 /// This is also used to disambiguate `start` and `end` values (e.g.
-/// [MainAxisAlignment.start] or [CrossAxisAlignment.end]).
+/// MainAxisAlignment.start or CrossAxisAlignment.end).
 ///
 /// See also:
 ///
@@ -128,27 +127,27 @@ enum VerticalDirection {
 enum AxisDirection {
   /// Zero is at the bottom and positive values are above it: ⇈
   ///
-  /// Alphabetical content with a [GrowthDirection.forward] would have the A at
+  /// Alphabetical content with a GrowthDirection.forward would have the A at
   /// the bottom and the Z at the top. This is an unusual configuration.
   up,
 
   /// Zero is on the left and positive values are to the right of it: ⇉
   ///
-  /// Alphabetical content with a [GrowthDirection.forward] would have the A on
+  /// Alphabetical content with a GrowthDirection.forward would have the A on
   /// the left and the Z on the right. This is the ordinary reading order for a
   /// horizontal set of tabs in an English application, for example.
   right,
 
   /// Zero is at the top and positive values are below it: ⇊
   ///
-  /// Alphabetical content with a [GrowthDirection.forward] would have the A at
+  /// Alphabetical content with a GrowthDirection.forward would have the A at
   /// the top and the Z at the bottom. This is the ordinary reading order for a
   /// vertical list.
   down,
 
   /// Zero is to the right and positive values are to the left of it: ⇇
   ///
-  /// Alphabetical content with a [GrowthDirection.forward] would have the A at
+  /// Alphabetical content with a GrowthDirection.forward would have the A at
   /// the right and the Z at the left. This is the ordinary reading order for a
   /// horizontal set of tabs in a Hebrew application, for example.
   left,

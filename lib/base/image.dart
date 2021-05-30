@@ -4,19 +4,19 @@ import 'hash_values.dart';
 class ImageProvider {
   final String url;
 
-  const ImageProvider.network(String url) : url = url;
+  const ImageProvider.network(this.url);
 
   const ImageProvider.asset(String name) : url = 'asset://$name';
 }
 
 /// An image for a box decoration.
 ///
-/// The image is painted using [paintImage], which describes the meanings of the
+/// The image is painted using paintImage, which describes the meanings of the
 /// various fields on this class in more detail.
 class DecorationImage {
-  /// Creates an image to show in a [BoxDecoration].
+  /// Creates an image to show in a BoxDecoration.
   ///
-  /// The [image], [alignment], [repeat], and [matchTextDirection] arguments
+  /// The [image], alignment, [repeat], and [matchTextDirection] arguments
   /// must not be null.
   const DecorationImage({
     required this.image,
@@ -27,27 +27,27 @@ class DecorationImage {
 
   /// The image to be painted into the decoration.
   ///
-  /// Typically this will be an [AssetImage] (for an image shipped with the
-  /// application) or a [NetworkImage] (for an image obtained from the network).
+  /// Typically this will be an AssetImage (for an image shipped with the
+  /// application) or a NetworkImage (for an image obtained from the network).
   final ImageProvider image;
 
   /// How the image should be inscribed into the box.
   ///
-  /// The default is [BoxFit.scaleDown] if [centerSlice] is null, and
-  /// [BoxFit.fill] if [centerSlice] is not null.
+  /// The default is [BoxFit.scaleDown] if centerSlice is null, and
+  /// [BoxFit.fill] if centerSlice is not null.
   ///
-  /// See the discussion at [paintImage] for more details.
+  /// See the discussion at paintImage for more details.
   final BoxFit? fit;
 
   /// How to paint any portions of the box that would not otherwise be covered
   /// by the image.
   final ImageRepeat repeat;
 
-  /// Whether to paint the image in the direction of the [TextDirection].
+  /// Whether to paint the image in the direction of the TextDirection.
   ///
-  /// If this is true, then in [TextDirection.ltr] contexts, the image will be
+  /// If this is true, then in TextDirection.ltr contexts, the image will be
   /// drawn with its origin in the top left (the "normal" painting direction for
-  /// images); and in [TextDirection.rtl] contexts, the image will be drawn with
+  /// images); and in TextDirection.rtl contexts, the image will be drawn with
   /// a scaling factor of -1 in the horizontal direction so that the origin is
   /// in the top right.
   final bool matchTextDirection;
@@ -80,7 +80,7 @@ class DecorationImage {
 
 /// How a box should be inscribed into another box.
 ///
-/// See also [applyBoxFit], which applies the sizing semantics of these values
+/// See also applyBoxFit, which applies the sizing semantics of these values
 /// (though not the alignment semantics).
 enum BoxFit {
   /// Fill the target box by distorting the source's aspect ratio.

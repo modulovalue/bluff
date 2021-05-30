@@ -4,6 +4,7 @@
 
 import 'hash_values.dart';
 
+/// TODO interface & impl.
 class Locale {
   /// Creates a new Locale object. The first argument is the
   /// primary language subtag, the second is the region (also
@@ -26,8 +27,8 @@ class Locale {
   /// [region](http://unicode.org/cldr/latest/common/validity/region.xml). The
   /// primary language subtag must be at least two and at most eight lowercase
   /// letters, but not four letters. The region region subtag must be two
-  /// uppercase letters or three digits. See the [Unicode Language
-  /// Identifier](https://www.unicode.org/reports/tr35/#Unicode_language_identifier)
+  /// uppercase letters or three digits. See the [Unicode Language Identifier]
+  /// (https://www.unicode.org/reports/tr35/#Unicode_language_identifier)
   /// specification.
   ///
   /// Validity is not checked by default, but some methods may throw away
@@ -40,7 +41,7 @@ class Locale {
   const Locale(
     this._languageCode,
     this._countryCode,
-  )  : assert(_languageCode != ''),
+  )  : assert(_languageCode != '', "The given language code can't be empty."),
         scriptCode = null;
 
   /// Creates a new Locale object.
@@ -63,18 +64,18 @@ class Locale {
     required this.scriptCode,
     required String countryCode,
     String languageCode = 'und',
-  })  : assert(languageCode != ''),
+  })  : assert(languageCode != '', "The given language code can't be empty."),
         _languageCode = languageCode,
-        assert(scriptCode != ''),
-        assert(countryCode != ''),
+        assert(scriptCode != '', "The given script code can't be empty."),
+        assert(countryCode != '', "The given country code can't be empty."),
         _countryCode = countryCode;
 
   /// The primary language subtag for the locale.
   ///
   /// This must not be null. It may be 'und', representing 'undefined'.
   ///
-  /// This is expected to be string registered in the [IANA Language Subtag
-  /// Registry](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry)
+  /// This is expected to be string registered in the IANA Language Subtag Registry]
+  /// (https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry)
   /// with the type "language". The string specified must match the case of the
   /// string in the registry.
   ///
@@ -84,9 +85,9 @@ class Locale {
   /// [languageCode] `he`, because `iw` is a deprecated language subtag that was
   /// replaced by the subtag `he`.
   ///
-  /// This must be a valid Unicode Language subtag as listed in [Unicode CLDR
-  /// supplemental
-  /// data](http://unicode.org/cldr/latest/common/validity/language.xml).
+  /// This must be a valid Unicode Language subtag as listed in
+  /// [Unicode CLDR supplemental data]
+  /// (http://unicode.org/cldr/latest/common/validity/language.xml).
   ///
   /// See also:
   ///
@@ -183,8 +184,8 @@ class Locale {
   /// This may be null, indicating that there is no specified script subtag.
   ///
   /// This must be a valid Unicode Language Identifier script subtag as listed
-  /// in [Unicode CLDR supplemental
-  /// data](http://unicode.org/cldr/latest/common/validity/script.xml).
+  /// in [Unicode CLDR supplemental data]
+  /// (http://unicode.org/cldr/latest/common/validity/script.xml).
   ///
   /// See also:
   ///
@@ -196,8 +197,9 @@ class Locale {
   ///
   /// This may be null, indicating that there is no specified region subtag.
   ///
-  /// This is expected to be string registered in the [IANA Language Subtag
-  /// Registry](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry)
+  /// This is expected to be string registered in the
+  /// [IANA Language Subtag Registry]
+  /// (https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry)
   /// with the type "region". The string specified must match the case of the
   /// string in the registry.
   ///

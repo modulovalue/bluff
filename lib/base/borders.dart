@@ -9,7 +9,7 @@ import 'edge_insets.dart';
 import 'hash_values.dart';
 import 'lerp.dart';
 
-/// The style of line to draw for a [BorderSide] in a [Border].
+/// The style of line to draw for a [BorderSide] in a Border.
 enum BorderStyle {
   /// Skip the border.
   none,
@@ -22,16 +22,16 @@ enum BorderStyle {
 
 /// A side of a border of a box.
 ///
-/// A [Border] consists of four [BorderSide] objects: [Border.top],
-/// [Border.left], [Border.right], and [Border.bottom].
+/// A Border consists of four [BorderSide] objects: Border.top,
+/// Border.left, Border.right, and Border.bottom.
 ///
 /// Note that setting [BorderSide.width] to 0.0 will result in hairline
 /// rendering. A more involved explanation is present in [BorderSide.width].
 ///
 /// {@tool sample}
 ///
-/// This sample shows how [BorderSide] objects can be used in a [Container], via
-/// a [BoxDecoration] and a [Border], to decorate some [Text]. In this example,
+/// This sample shows how [BorderSide] objects can be used in a Container, via
+/// a BoxDecoration and a Border, to decorate some Text. In this example,
 /// the text has a thick bar above it that is light blue, and a thick bar below
 /// it that is a darker shade of blue.
 ///
@@ -51,9 +51,9 @@ enum BorderStyle {
 ///
 /// See also:
 ///
-///  * [Border], which uses [BorderSide] objects to represent its sides.
-///  * [BoxDecoration], which optionally takes a [Border] object.
-///  * [TableBorder], which is similar to [Border] but has two more sides
+///  * Border, which uses [BorderSide] objects to represent its sides.
+///  * BoxDecoration, which optionally takes a Border object.
+///  * TableBorder, which is similar to Border but has two more sides
 ///    ([TableBorder.horizontalInside] and [TableBorder.verticalInside]), both
 ///    of which are also [BorderSide] objects.
 class BorderSide {
@@ -64,7 +64,7 @@ class BorderSide {
     this.color = const Color(0xFF000000),
     this.width = 1.0,
     this.style = BorderStyle.solid,
-  }) : assert(width >= 0.0);
+  }) : assert(width >= 0.0, "The given widget must be positive or 0.0");
 
   /// Creates a [BorderSide] that represents the addition of the two given
   /// [BorderSide]s.
@@ -74,18 +74,18 @@ class BorderSide {
   ///
   /// If one of the sides is zero-width with [BorderStyle.none], then the other
   /// side is return as-is. If both of the sides are zero-width with
-  /// [BorderStyle.none], then [BorderSide.zero] is returned.
+  /// [BorderStyle.none], then BorderSide.zero is returned.
   ///
   /// The arguments must not be null.
   static BorderSide merge(BorderSide a, BorderSide b) {
-    assert(canMerge(a, b));
+    assert(canMerge(a, b), "The given BorderSides must be mergeable.");
     final bool aIsNone = a.style == BorderStyle.none && a.width == 0.0;
     final bool bIsNone = b.style == BorderStyle.none && b.width == 0.0;
     if (aIsNone && bIsNone) return BorderSide.none;
     if (aIsNone) return b;
     if (bIsNone) return a;
-    assert(a.color == b.color);
-    assert(a.style == b.style);
+    assert(a.color == b.color, "The given colors must be equal.");
+    assert(a.style == b.style, "The given styles must be equal.");
     return BorderSide(
       color: a.color, // == b.color
       width: a.width + b.width,
@@ -121,14 +121,12 @@ class BorderSide {
     Color? color,
     double? width,
     BorderStyle? style,
-  }) {
-    assert(width == null || width >= 0.0);
-    return BorderSide(
-      color: color ?? this.color,
-      width: width ?? this.width,
-      style: style ?? this.style,
-    );
-  }
+  }) =>
+      BorderSide(
+        color: color ?? this.color,
+        width: width ?? this.width,
+        style: style ?? this.style,
+      );
 
   /// Creates a copy of this border side description but with the width scaled
   /// by the factor `t`.
@@ -145,7 +143,7 @@ class BorderSide {
   /// style to [BorderStyle.none].
   ///
   /// Values for `t` are usually obtained from an [Animation<double>], such as
-  /// an [AnimationController].
+  /// an AnimationController.
   BorderSide scale(double t) {
     return BorderSide(
       color: color,
@@ -224,17 +222,17 @@ class BorderSide {
 /// Base class for shape outlines.
 ///
 /// This class handles how to add multiple borders together. Subclasses define
-/// various shapes, like circles ([CircleBorder]), rounded rectangles
-/// ([RoundedRectangleBorder]), continuous rectangles
-/// ([ContinuousRectangleBorder]), or beveled rectangles
-/// ([BeveledRectangleBorder]).
+/// various shapes, like circles (CircleBorder), rounded rectangles
+/// (RoundedRectangleBorder), continuous rectangles
+/// (ContinuousRectangleBorder), or beveled rectangles
+/// (BeveledRectangleBorder).
 ///
 /// See also:
 ///
-///  * [ShapeDecoration], which can be used with [DecoratedBox] to show a shape.
-///  * [Material] (and many other widgets in the Material library), which takes
+///  * ShapeDecoration, which can be used with DecoratedBox to show a shape.
+///  * Material (and many other widgets in the Material library), which takes
 ///    a [ShapeBorder] to define its shape.
-///  * [NotchedShape], which describes a shape with a hole in it.
+///  * NotchedShape, which describes a shape with a hole in it.
 abstract class ShapeBorder {
   /// Abstract const constructor. This constructor enables subclasses to provide
   /// const constructors so that they can be used in const expressions.
@@ -246,12 +244,12 @@ abstract class ShapeBorder {
   /// as to avoid painting over any important part of the border. It is the
   /// amount by which additional borders will be inset before they are drawn.
   ///
-  /// This can be used, for example, with a [Padding] widget to inset a box by
+  /// This can be used, for example, with a Padding widget to inset a box by
   /// the size of these borders.
   ///
   /// Shapes that have a fixed ratio regardless of the area on which they are
   /// painted, or that change their rendering based on the size they are given
-  /// when painting (for instance [CircleBorder]), will not return valid
+  /// when painting (for instance CircleBorder), will not return valid
   /// [dimensions] information because they cannot know their eventual size when
   /// computing their [dimensions].
   EdgeInsetsGeometry get dimensions;
@@ -284,7 +282,7 @@ abstract class ShapeBorder {
   ///
   /// Typically this means scaling the width of the border's side, but it can
   /// also include scaling other artifacts of the border, e.g. the border radius
-  /// of a [RoundedRectangleBorder].
+  /// of a RoundedRectangleBorder.
   ///
   /// The `t` argument represents the multiplicand, or the position on the
   /// timeline for an interpolation from nothing to `this`, with 0.0 meaning
@@ -296,7 +294,7 @@ abstract class ShapeBorder {
   /// nothing, and going beyond nothing)
   ///
   /// Values for `t` are usually obtained from an [Animation<double>], such as
-  /// an [AnimationController].
+  /// an AnimationController.
   ///
   /// See also:
   ///
@@ -322,10 +320,10 @@ abstract class ShapeBorder {
   /// timeline between `a` and `this`. The interpolation can be extrapolated
   /// beyond 0.0 and 1.0, so negative values and values greater than 1.0 are
   /// valid (and can easily be generated by curves such as
-  /// [Curves.elasticInOut]).
+  /// Curves.elasticInOut).
   ///
   /// Values for `t` are usually obtained from an [Animation<double>], such as
-  /// an [AnimationController].
+  /// an AnimationController.
   ///
   /// Instead of calling this directly, use [ShapeBorder.lerp].
   ShapeBorder? lerpFrom(ShapeBorder? a, double t) {
@@ -352,10 +350,10 @@ abstract class ShapeBorder {
   /// meaning that the interpolation is at the relevant point on the timeline
   /// between `this` and `b`. The interpolation can be extrapolated beyond 0.0
   /// and 1.0, so negative values and values greater than 1.0 are valid (and can
-  /// easily be generated by curves such as [Curves.elasticInOut]).
+  /// easily be generated by curves such as Curves.elasticInOut).
   ///
   /// Values for `t` are usually obtained from an [Animation<double>], such as
-  /// an [AnimationController].
+  /// an AnimationController.
   ///
   /// Instead of calling this directly, use [ShapeBorder.lerp].
   ShapeBorder? lerpTo(ShapeBorder? b, double t) {
@@ -389,8 +387,8 @@ abstract class ShapeBorder {
 /// The borders are listed from the outside to the inside.
 class _CompoundBorder extends ShapeBorder {
   _CompoundBorder(this.borders)
-      : assert(borders.length >= 2),
-        assert(!borders.any((ShapeBorder border) => border is _CompoundBorder));
+      : assert(borders.length >= 2, "At least two borders must be given. $borders"),
+        assert(!borders.any((ShapeBorder border) => border is _CompoundBorder), "None of the given borders can be a compound shape.");
 
   final List<ShapeBorder> borders;
 
@@ -448,7 +446,7 @@ class _CompoundBorder extends ShapeBorder {
   }
 
   static _CompoundBorder lerp(ShapeBorder? a, ShapeBorder? b, double t) {
-    assert(a is _CompoundBorder || b is _CompoundBorder); // Not really necessary, but all call sites currently intend this.
+    assert(a is _CompoundBorder || b is _CompoundBorder, "Either a or b must be a compound border."); // Not really necessary, but all call sites currently intend this.
     final List<ShapeBorder> aList = a is _CompoundBorder ? a.borders : <ShapeBorder>[a!];
     final List<ShapeBorder> bList = b is _CompoundBorder ? b.borders : <ShapeBorder>[b!];
     final List<ShapeBorder> results = <ShapeBorder>[];
