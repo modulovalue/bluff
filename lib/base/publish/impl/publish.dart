@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import '../../../html/interface/html.dart';
 import '../../../widgets/localization/localizations.dart';
 import '../../../widgets/widget/impl/build_context.dart';
 import '../../../widgets/widget/interface/build_context.dart';
@@ -9,19 +10,20 @@ import '../../assets.dart';
 import '../../locale.dart';
 import '../interface/publishing_log.dart';
 import 'print_log.dart';
-import 'via_manual.dart';
 
-void publishApp(
-  Widget widget, {
+void publishApp({
+  required Widget root,
+  required void Function(String targetPath, HtmlElement2 element) serializeTo,
   Directory? directory,
   Directory? assets,
 }) =>
     publishRaw(
-      application: widget is Application ? widget : defaultApplication(child: widget),
+      application: root is Application ? root : defaultApplication(child: root),
       directory: directory ?? Directory('build'),
       assetsDirectory: assets ?? Directory('example/assets'),
       log: const PublishingLogPrintImpl(print),
       assets: const AssetsDefaultImpl(),
+      serializeTo: serializeTo,
     );
 
 Application defaultApplication({
@@ -43,6 +45,7 @@ void publishRaw({
   required Directory assetsDirectory,
   required PublishingLog log,
   required Assets assets,
+  required void Function(String targetPath, HtmlElement2 element) serializeTo,
 }) {
   final context = BuildContextImpl(assets: assets);
   for (final locale in application.supportedLocales) {
@@ -61,6 +64,7 @@ void publishRaw({
       localeDirectory: localeDirectory,
       log: log,
       context: context,
+      serializeTo: serializeTo,
     );
   }
 }
@@ -101,6 +105,7 @@ void processRoutes({
   required BuildContext context,
   required Locale locale,
   required Directory localeDirectory,
+  required void Function(String targetPath, HtmlElement2 element) serializeTo,
 }) {
   for (final route in application.routes) {
     log.processingRoute(route);
@@ -116,7 +121,6 @@ void processRoutes({
     final targetPath = absoluteLocalDirectory + Platform.pathSeparator + relativeTargetUrl;
     final file = File(targetPath);
     log.processingRouteFile(file);
-    file.writeAsStringSync(elementToStringViaManual(result));
-    // file.writeAsStringSync(elementToStringViaUniversal(result));
+    serializeTo(targetPath, result);
   }
 }

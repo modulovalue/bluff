@@ -1,3 +1,4 @@
+// ignore: implementation_imports
 import 'package:universal_html/src/html.dart' as html;
 
 import '../../../css/impl/builder.dart';
