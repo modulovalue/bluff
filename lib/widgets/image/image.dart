@@ -7,8 +7,9 @@ import '../../html/interface/html.dart';
 import '../widget/impl/resolve_url.dart';
 import '../widget/impl/widget_mixin.dart';
 import '../widget/interface/build_context.dart';
+import '../widget/interface/widget.dart';
 
-class Image with WidgetMixin {
+class Image implements Widget {
   final ImageProvider image;
   final double? width;
   final double? height;
@@ -93,4 +94,7 @@ class Image with WidgetMixin {
     }
     return result;
   }
+
+  @override
+  HtmlElement2 render(BuildContext context) => renderWidget(this, context);
 }

@@ -1,4 +1,5 @@
 import '../../css/impl/builder.dart';
+import '../../css/interface/css.dart';
 import '../interface/html.dart';
 
 mixin HtmlElementMixin implements HtmlElement2 {
@@ -7,23 +8,35 @@ mixin HtmlElementMixin implements HtmlElement2 {
   @override
   String? id;
   @override
-  final List<HtmlElement2> childNodes = [];
+  final List<HtmlEntity> childNodes = [];
   @override
-  final CssStyleDeclaration2BuilderImpl style = CssStyleDeclaration2BuilderImpl();
+  final CssStyleDeclaration2 style = CssStyleDeclaration2BuilderImpl();
 }
 
 class BRElement2Impl with HtmlElementMixin implements BRElement2 {
   BRElement2Impl();
 
   @override
-  R accept<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitBr(this, a);
+  R acceptHtmlElementOneArg<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitElementBr(this, a);
+
+  @override
+  R acceptHtmlEntityOneArg<R, A>(HtmlEntityVisitorOneArg<R, A> v, A a) => v.visitEntityElement(this, a);
 }
 
 class HtmlHtmlElement2Impl with HtmlElementMixin implements HtmlHtmlElement2 {
-  HtmlHtmlElement2Impl();
+  factory HtmlHtmlElement2Impl.make(Iterable<HtmlEntity> nodes) {
+    final node = HtmlHtmlElement2Impl._();
+    node.childNodes.addAll(nodes);
+    return node;
+  }
+
+  HtmlHtmlElement2Impl._();
 
   @override
-  R accept<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitHtmlHtml(this, a);
+  R acceptHtmlElementOneArg<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitElementHtmlHtml(this, a);
+
+  @override
+  R acceptHtmlEntityOneArg<R, A>(HtmlEntityVisitorOneArg<R, A> v, A a) => v.visitEntityElement(this, a);
 }
 
 class MetaElement2Impl with HtmlElementMixin implements MetaElement2 {
@@ -43,24 +56,54 @@ class MetaElement2Impl with HtmlElementMixin implements MetaElement2 {
       attributes.forEach(fn);
 
   @override
-  R accept<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitMeta(this, a);
+  R acceptHtmlElementOneArg<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitElementMeta(this, a);
+
+  @override
+  R acceptHtmlEntityOneArg<R, A>(HtmlEntityVisitorOneArg<R, A> v, A a) => v.visitEntityElement(this, a);
 }
 
 class BodyElement2Impl with HtmlElementMixin implements BodyElement2 {
-  BodyElement2Impl();
+  factory BodyElement2Impl.make(Iterable<HtmlEntity> nodes) {
+    final node = BodyElement2Impl._();
+    node.childNodes.addAll(nodes);
+    return node;
+  }
+
+  BodyElement2Impl._();
 
   @override
-  R accept<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitBody(this, a);
+  R acceptHtmlElementOneArg<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitElementBody(this, a);
+
+  @override
+  R acceptHtmlEntityOneArg<R, A>(HtmlEntityVisitorOneArg<R, A> v, A a) => v.visitEntityElement(this, a);
 }
 
-class TextElement2Impl with HtmlElementMixin implements TextElement2 {
+class RawTextElement2Impl implements RawTextElement2 {
   @override
   final String text;
 
-  TextElement2Impl(this.text);
+  const RawTextElement2Impl(this.text);
 
   @override
-  R accept<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitText(this, a);
+  R acceptHtmlNodeOneArg<R, A>(HtmlNodeVisitorOneArg<R, A> v, A a) => v.visitNodeText(this, a);
+
+  @override
+  R acceptHtmlEntityOneArg<R, A>(HtmlEntityVisitorOneArg<R, A> v, A a) => v.visitEntityNode(this, a);
+}
+
+class CssTextElement2Impl implements CssTextElement2 {
+  @override
+  final String key;
+  @override
+  final CssStyleDeclaration2 css;
+
+  const CssTextElement2Impl(this.key, this.css);
+
+  @override
+  R acceptHtmlNodeOneArg<R, A>(HtmlNodeVisitorOneArg<R, A> v, A a) => v.visitNodeStyle(this, a);
+
+  @override
+  R acceptHtmlEntityOneArg<R, A>(HtmlEntityVisitorOneArg<R, A> v, A a) => v.visitEntityNode(this, a);
 }
 
 class ScriptElement2Impl with HtmlElementMixin implements ScriptElement2 {
@@ -74,7 +117,10 @@ class ScriptElement2Impl with HtmlElementMixin implements ScriptElement2 {
   ScriptElement2Impl();
 
   @override
-  R accept<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitScript(this, a);
+  R acceptHtmlElementOneArg<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitElementScript(this, a);
+
+  @override
+  R acceptHtmlEntityOneArg<R, A>(HtmlEntityVisitorOneArg<R, A> v, A a) => v.visitEntityElement(this, a);
 }
 
 class LinkElement2Impl with HtmlElementMixin implements LinkElement2 {
@@ -83,10 +129,16 @@ class LinkElement2Impl with HtmlElementMixin implements LinkElement2 {
   @override
   String? rel;
 
-  LinkElement2Impl();
+  LinkElement2Impl({
+    required this.href,
+    required this.rel,
+  });
 
   @override
-  R accept<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitLink(this, a);
+  R acceptHtmlElementOneArg<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitElementLink(this, a);
+
+  @override
+  R acceptHtmlEntityOneArg<R, A>(HtmlEntityVisitorOneArg<R, A> v, A a) => v.visitEntityElement(this, a);
 }
 
 class TitleElement2Impl with HtmlElementMixin implements TitleElement2 {
@@ -96,21 +148,36 @@ class TitleElement2Impl with HtmlElementMixin implements TitleElement2 {
   TitleElement2Impl();
 
   @override
-  R accept<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitTitle(this, a);
+  R acceptHtmlElementOneArg<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitElementTitle(this, a);
+
+  @override
+  R acceptHtmlEntityOneArg<R, A>(HtmlEntityVisitorOneArg<R, A> v, A a) => v.visitEntityElement(this, a);
 }
 
 class StyleElement2Impl with HtmlElementMixin implements StyleElement2 {
-  StyleElement2Impl();
+  factory StyleElement2Impl.make(Iterable<HtmlEntity> nodes) {
+    final node = StyleElement2Impl._();
+    node.childNodes.addAll(nodes);
+    return node;
+  }
+
+  StyleElement2Impl._();
 
   @override
-  R accept<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitStyle(this, a);
+  R acceptHtmlElementOneArg<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitElementStyle(this, a);
+
+  @override
+  R acceptHtmlEntityOneArg<R, A>(HtmlEntityVisitorOneArg<R, A> v, A a) => v.visitEntityElement(this, a);
 }
 
 class ParagraphElement2Impl with HtmlElementMixin implements ParagraphElement2 {
   ParagraphElement2Impl();
 
   @override
-  R accept<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitParagraph(this, a);
+  R acceptHtmlElementOneArg<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitElementParagraph(this, a);
+
+  @override
+  R acceptHtmlEntityOneArg<R, A>(HtmlEntityVisitorOneArg<R, A> v, A a) => v.visitEntityElement(this, a);
 }
 
 class ImageElement2Impl with HtmlElementMixin implements ImageElement2 {
@@ -122,14 +189,36 @@ class ImageElement2Impl with HtmlElementMixin implements ImageElement2 {
   ImageElement2Impl();
 
   @override
-  R accept<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitImage(this, a);
+  R acceptHtmlElementOneArg<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitElementImage(this, a);
+
+  @override
+  R acceptHtmlEntityOneArg<R, A>(HtmlEntityVisitorOneArg<R, A> v, A a) => v.visitEntityElement(this, a);
 }
 
 class DivElement2Impl with HtmlElementMixin implements DivElement2 {
-  DivElement2Impl();
+  @override
+  // ignore: overridden_fields
+  final CssStyleDeclaration2BuilderImpl style;
+
+  DivElement2Impl() : style = CssStyleDeclaration2BuilderImpl();
+
+  DivElement2Impl.customStyle(this.style);
+
+  factory DivElement2Impl.make({
+    required String className,
+    required Iterable<HtmlEntity> nodes,
+  }) {
+    final node = DivElement2Impl();
+    node.className = className;
+    node.childNodes.addAll(nodes);
+    return node;
+  }
 
   @override
-  R accept<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitDiv(this, a);
+  R acceptHtmlElementOneArg<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitElementDiv(this, a);
+
+  @override
+  R acceptHtmlEntityOneArg<R, A>(HtmlEntityVisitorOneArg<R, A> v, A a) => v.visitEntityElement(this, a);
 }
 
 class AnchorElement2Impl with HtmlElementMixin implements AnchorElement2 {
@@ -141,12 +230,24 @@ class AnchorElement2Impl with HtmlElementMixin implements AnchorElement2 {
   AnchorElement2Impl();
 
   @override
-  R accept<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitAnchor(this, a);
+  R acceptHtmlElementOneArg<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitElementAnchor(this, a);
+
+  @override
+  R acceptHtmlEntityOneArg<R, A>(HtmlEntityVisitorOneArg<R, A> v, A a) => v.visitEntityElement(this, a);
 }
 
 class HeadElement2Impl with HtmlElementMixin implements HeadElement2 {
-  HeadElement2Impl();
+  factory HeadElement2Impl.make(Iterable<HtmlEntity> children) {
+    final node = HeadElement2Impl._();
+    node.childNodes.addAll(children);
+    return node;
+  }
+
+  HeadElement2Impl._();
 
   @override
-  R accept<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitHead(this, a);
+  R acceptHtmlElementOneArg<R, A>(HtmlElementVisitorOneArg<R, A> v, A a) => v.visitElementHead(this, a);
+
+  @override
+  R acceptHtmlEntityOneArg<R, A>(HtmlEntityVisitorOneArg<R, A> v, A a) => v.visitEntityElement(this, a);
 }

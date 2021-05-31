@@ -44,7 +44,7 @@ class Row extends Flex {
         );
 }
 
-class Flex with WidgetMixin {
+class Flex implements Widget {
   final Axis direction;
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
@@ -64,7 +64,7 @@ class Flex with WidgetMixin {
 
   @override
   HtmlElement2 render(BuildContext context) {
-    final result = super.render(context);
+    final result = renderWidget(this, context);
     if (children != null) {
       for (final child in children!) {
         result.childNodes.add(child.render(context));
@@ -133,7 +133,7 @@ class Flex with WidgetMixin {
   }
 }
 
-class Flexible with WidgetMixin {
+class Flexible implements Widget {
   final Widget child;
 
   /// The flex factor to use for this child
@@ -180,6 +180,9 @@ class Flexible with WidgetMixin {
     }
     return style;
   }
+
+  @override
+  HtmlElement2 render(BuildContext context) => renderWidget(this, context);
 }
 
 class Expanded extends Flexible {

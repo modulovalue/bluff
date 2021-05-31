@@ -7,7 +7,7 @@ import '../widget/impl/widget_mixin.dart';
 import '../widget/interface/build_context.dart';
 import '../widget/interface/widget.dart';
 
-class ConstrainedBox with WidgetMixin {
+class ConstrainedBox implements Widget {
   /// The additional constraints to impose on the child.
   final BoxConstraints? constraints;
   final Widget? child;
@@ -37,6 +37,9 @@ class ConstrainedBox with WidgetMixin {
   HtmlElement2 renderHtml(BuildContext context) {
     return child?.render(context) ?? DivElement2Impl();
   }
+
+  @override
+  HtmlElement2 render(BuildContext context) => renderWidget(this, context);
 }
 
 class BoxConstraints {

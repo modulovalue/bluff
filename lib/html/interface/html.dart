@@ -1,18 +1,24 @@
-import '../../css/interface/builder.dart';
+import '../../css/interface/css.dart';
 
-export 'package:universal_html/src/html.dart';
+/// TODO split into immutable, mutable and builder parts.
+/// TODO Html node should be a child of a HtmlEntity that has elements and nodes as children.
+abstract class HtmlEntity {
+  R acceptHtmlEntityOneArg<R, A>(HtmlEntityVisitorOneArg<R, A> v, A a);
+}
 
-/// TODO diy html types serialization and remove universal_html dependency.
+abstract class HtmlNode implements HtmlEntity {
+  R acceptHtmlNodeOneArg<R, A>(HtmlNodeVisitorOneArg<R, A> v, A a);
+}
 
-abstract class HtmlElement2 {
+abstract class HtmlElement2 implements HtmlEntity {
   abstract String? className;
   abstract String? id;
 
-  CssStyleDeclaration2Builder get style;
+  CssStyleDeclaration2 get style;
 
-  List<HtmlElement2> get childNodes;
+  List<HtmlEntity> get childNodes;
 
-  R accept<R, A>(HtmlElementVisitorOneArg<R, A> v, A a);
+  R acceptHtmlElementOneArg<R, A>(HtmlElementVisitorOneArg<R, A> v, A a);
 }
 
 abstract class DivElement2 implements HtmlElement2 {}
@@ -46,8 +52,14 @@ abstract class TitleElement2 implements HtmlElement2 {
 
 abstract class HtmlHtmlElement2 implements HtmlElement2 {}
 
-abstract class TextElement2 implements HtmlElement2 {
+abstract class RawTextElement2 implements HtmlNode {
   String get text;
+}
+
+abstract class CssTextElement2 implements HtmlNode {
+  String get key;
+
+  CssStyleDeclaration2 get css;
 }
 
 abstract class BRElement2 implements HtmlElement2 {}
@@ -65,18 +77,27 @@ abstract class AnchorElement2 implements HtmlElement2 {
 }
 
 abstract class HtmlElementVisitorOneArg<R, A> {
-  R visitDiv(DivElement2 div, A arg); //
-  R visitHead(HeadElement2 div, A arg); //
-  R visitMeta(MetaElement2 div, A arg); //
-  R visitBody(BodyElement2 div, A arg); //
-  R visitStyle(StyleElement2 div, A arg); //
-  R visitScript(ScriptElement2 div, A arg); //
-  R visitLink(LinkElement2 div, A arg); //
-  R visitTitle(TitleElement2 div, A arg); //
-  R visitHtmlHtml(HtmlHtmlElement2 div, A arg); //
-  R visitText(TextElement2 div, A arg); //
-  R visitBr(BRElement2 div, A arg); //
-  R visitParagraph(ParagraphElement2 div, A arg); //
-  R visitImage(ImageElement2 div, A arg); //
-  R visitAnchor(AnchorElement2 div, A arg); //
+  R visitElementDiv(DivElement2 node, A arg); //
+  R visitElementHead(HeadElement2 node, A arg); //
+  R visitElementMeta(MetaElement2 node, A arg); //
+  R visitElementBody(BodyElement2 node, A arg); //
+  R visitElementStyle(StyleElement2 node, A arg); //
+  R visitElementScript(ScriptElement2 node, A arg); //
+  R visitElementLink(LinkElement2 node, A arg); //
+  R visitElementTitle(TitleElement2 node, A arg); //
+  R visitElementHtmlHtml(HtmlHtmlElement2 node, A arg); //
+  R visitElementBr(BRElement2 node, A arg); //
+  R visitElementParagraph(ParagraphElement2 node, A arg); //
+  R visitElementImage(ImageElement2 node, A arg); //
+  R visitElementAnchor(AnchorElement2 node, A arg); //
+}
+
+abstract class HtmlEntityVisitorOneArg<R, A> {
+  R visitEntityElement(HtmlElement2 node, A arg); //
+  R visitEntityNode(HtmlNode node, A arg); //
+}
+
+abstract class HtmlNodeVisitorOneArg<R, A> {
+  R visitNodeText(RawTextElement2 node, A arg); //
+  R visitNodeStyle(CssTextElement2 node, A arg); //
 }

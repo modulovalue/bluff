@@ -36,4 +36,7 @@ class BuildContextImpl implements BuildContext {
     );
     return _inheritedWidgets[T] as T?;
   }
+
+  @override
+  void setStyle(String className, CssStyleDeclaration2 css) => styles[className] = css;
 }

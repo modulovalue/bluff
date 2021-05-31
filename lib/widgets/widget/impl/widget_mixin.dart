@@ -6,40 +6,37 @@ import '../interface/build_context.dart';
 import '../interface/inherited_widget.dart';
 import '../interface/widget.dart';
 
-mixin WidgetMixin implements Widget {
-  static HtmlElement2 renderWidget(Widget widget, BuildContext context) {
-    final css = widget.renderCss(context);
-    final html = widget.renderHtml(context);
-    final k = widget.key;
-    if (k != null) {
-      final media = MediaQuery.of(context);
-      html.id = k.className + '-${media!.size.index}';
-    }
-    final key = context.createDefaultKey();
-    html.className = html.className! + (html.className!.isEmpty ? '' : ' ') + key.className;
-    if (css != null) context.styles[key.className] = css;
-    return html;
+HtmlElement2 renderWidget(Widget widget, BuildContext context) {
+  final html = widget.renderHtml(context);
+  final k = widget.key;
+  if (k != null) {
+    html.id = k.className + '-${MediaQuery.of(context)!.size.index}';
   }
+  final newClassKey = context.createDefaultKey();
+  final currentClasses = html.className;
+  html.className = [
+    if (currentClasses != null && currentClasses != "") currentClasses,
+    newClassKey.className,
+  ].join(" ");
 
-  @override
-  HtmlElement2 render(BuildContext context) => //
-      WidgetMixin.renderWidget(this, context);
-
-  @override
-  CssStyleDeclaration2? renderCss(BuildContext context) => null;
+  final css = widget.renderCss(context);
+  if (css != null) {
+    context.setStyle(newClassKey.className,  css);
+  }
+  return html;
 }
 
 mixin InheritedWidgetMixin implements InheritedWidget {
   Widget get child;
 
   @override
-  HtmlElement2 renderHtml(BuildContext context) => child.render(context);
+  HtmlElement2 renderHtml(BuildContext context) => child.renderHtml(context.withInherited(this));
 
   @override
-  HtmlElement2 render(BuildContext context) => WidgetMixin.renderWidget(child, context.withInherited(this));
+  HtmlElement2 render(BuildContext context) => child.render(context.withInherited(this));
 
   @override
-  CssStyleDeclaration2? renderCss(BuildContext context) => null;
+  CssStyleDeclaration2? renderCss(BuildContext context) => child.renderCss(context.withInherited(this));
 }
 
 class MediaQuery with InheritedWidgetMixin {

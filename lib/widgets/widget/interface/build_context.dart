@@ -13,4 +13,6 @@ abstract class BuildContext {
   Key createDefaultKey();
 
   T? dependOnInheritedWidgetOfExactType<T extends InheritedWidget>();
+
+  void setStyle(String className, CssStyleDeclaration2 css);
 }

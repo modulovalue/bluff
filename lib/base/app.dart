@@ -1,3 +1,4 @@
+import '../css/interface/css.dart';
 import '../html/impl/html.dart';
 import '../html/interface/html.dart';
 import '../widgets/builder/builder.dart';
@@ -11,18 +12,14 @@ import 'keys.dart';
 import 'locale.dart';
 import 'media_query_data.dart';
 
-class Application with WidgetMixin {
+class Application implements Widget {
   final String? currentRoute;
   final List<WidgetRoute> routes;
-  final List<MediaSize> availableSizes;
   final List<Locale> supportedLocales;
-  final List<MetaElement2> additionalMeta;
-  final List<void Function(Application application, HtmlHtmlElement2 document)> plugins;
   final List<String> stylesheetLinks;
   final List<String> scriptLinks;
   final ThemeData Function(BuildContext context)? theme;
   final Widget Function(BuildContext context, WidgetRoute child)? builder;
-  final void Function(BuildContext context, HtmlHtmlElement2 html)? postRender;
   @override
   final Key? key = null;
 
@@ -35,112 +32,96 @@ class Application with WidgetMixin {
     this.currentRoute,
     this.theme,
     this.builder,
-    this.postRender,
-    this.additionalMeta = const <MetaElement2>[],
     this.stylesheetLinks = const <String>[],
     this.scriptLinks = const <String>[],
-    this.plugins = const <void Function(Application application, HtmlHtmlElement2 document)>[],
     this.delegates = const <LocalizationsDelegate<dynamic>>[],
-    this.supportedLocales = const <Locale>[
-      Locale('en', 'US'),
-    ],
-    List<MediaSize> availableSizes = MediaSize.values,
-  })  : assert(availableSizes.isNotEmpty, "Given availableSize can't be empty."),
-        availableSizes = <MediaSize>[...availableSizes]..sort((x, y) => x.index.compareTo(y.index));
+    this.supportedLocales = const <Locale>[Locale('en', 'US')],
+  });
 
   Application withCurrentRoute(
     String currentRoute,
   ) =>
       Application(
-        routes: routes,
         currentRoute: currentRoute,
+        routes: routes,
         theme: theme,
         stylesheetLinks: stylesheetLinks,
         scriptLinks: scriptLinks,
-        plugins: plugins,
         delegates: delegates,
         supportedLocales: supportedLocales,
-        availableSizes: availableSizes,
         builder: builder,
-        additionalMeta: additionalMeta,
-        postRender: postRender,
       );
 
-  String _mediaClassForMediaSize(MediaSize size) {
-    final availableIndex = availableSizes.indexOf(size);
-    final min = availableIndex == 0 ? Breakpoint(size, 0) : Breakpoint.defaultBreakpoint(size);
-    final max = availableIndex + 1 >= availableSizes.length ? null : Breakpoint.defaultBreakpoint(availableSizes[availableIndex + 1]);
-    final minString = '(min-width: ${min.minSize}px)';
-    final maxString = max == null ? '' : ' and (max-width: ${max.minSize - 1}px)';
-    final buffer = StringBuffer();
-    buffer.write('@media all and $minString$maxString {');
-    for (final current in availableSizes) {
-      buffer.write('.size${current.index} {display: ${size == current ? "block" : "none"}; } ');
-    }
-    buffer.write('}');
-    return buffer.toString();
-  }
+  static const availableSizes = MediaSize.values;
 
   @override
   HtmlElement2 renderHtml(BuildContext context) {
-    final document = HtmlHtmlElement2Impl();
     final currentRoute = routes.firstWhere((x) => x.relativeUrl == this.currentRoute);
-    final head = HeadElement2Impl();
-    head.childNodes.add(MetaElement2Impl()..setAttribute('charset', 'UTF-8'));
-    head.childNodes
-        .add(MetaElement2Impl()..setAttribute('name', 'viewport')..setAttribute('content', 'width=device-width, initial-scale=1'));
-    head.childNodes.addAll(additionalMeta);
-    document.childNodes.add(head);
-    for (final link in stylesheetLinks) {
-      final linkElement = LinkElement2Impl();
-      linkElement.href = link;
-      linkElement.rel = 'stylesheet';
-      head.childNodes.add(linkElement);
-    }
-    currentRoute.head(context, head);
-    final styles = StyleElement2Impl();
-    styles.childNodes.add(TextElement2Impl(resetCss));
-    styles.childNodes.add(TextElement2Impl(baseCss));
-    document.childNodes.add(styles);
-    final body = BodyElement2Impl();
-    document.childNodes.add(body);
-    for (final mediaSize in availableSizes) {
-      styles.childNodes.add(TextElement2Impl(_mediaClassForMediaSize(mediaSize)));
-      final sizeDiv = DivElement2Impl();
-      sizeDiv.className = 'size' + mediaSize.index.toString();
-      final root = MediaQuery(
-        data: MediaQueryDataImpl(size: mediaSize),
-        child: Builder(
-          builder: (context) => Theme(
-            data: theme?.call(context),
-            child: builder != null ? builder!(context, currentRoute) : currentRoute.builder(context),
+    return HtmlHtmlElement2Impl.make([
+      HeadElement2Impl.make(
+        [
+          MetaElement2Impl()
+            ..setAttribute('charset', 'UTF-8')
+            ..setAttribute('name', 'viewport')
+            ..setAttribute('content', 'width=device-width, initial-scale=1'),
+          for (final link in stylesheetLinks) //
+            LinkElement2Impl(href: link, rel: 'stylesheet'),
+          ...currentRoute.head(context),
+        ],
+      ),
+      StyleElement2Impl.make([
+        const RawTextElement2Impl(resetCss),
+        const RawTextElement2Impl(baseCss),
+        for (final size in availableSizes) //
+          RawTextElement2Impl(mediaClassForMediaSize(availableSizes, size)),
+      ]),
+      BodyElement2Impl.make([
+        for (final size in availableSizes)
+          DivElement2Impl.make(
+            className: 'size' + size.index.toString(),
+            nodes: [
+              MediaQuery(
+                data: MediaQueryDataImpl(size: size),
+                child: Builder(
+                  builder: (context) => Theme(
+                    data: theme?.call(context),
+                    child: builder != null ? builder!(context, currentRoute) : currentRoute.builder(context),
+                  ),
+                ),
+              ).render(context)
+            ],
           ),
-        ),
-      );
-      sizeDiv.childNodes.add(root.render(context));
-      body.childNodes.add(sizeDiv);
-      for (final link in scriptLinks) {
-        body.childNodes.add(ScriptElement2Impl()
-          ..src = link
-          ..async = true
-          ..defer = true);
-      }
-    }
-    postRender?.call(context, document);
-    return document;
+        for (final link in scriptLinks)
+          ScriptElement2Impl()
+            ..src = link
+            ..async = true
+            ..defer = true,
+      ])
+    ]);
   }
 
   @override
   HtmlElement2 render(BuildContext context) {
-    final result = super.render(context);
-    final styles = result.childNodes.firstWhere((x) => x is StyleElement);
-    context.styles.entries.forEach((e) {
-      styles.childNodes.add(TextElement2Impl('.${e.key} { ${e.value.toString()} }'));
-    });
-    for (final plugin in plugins) {
-      plugin(this, result as HtmlHtmlElement2Impl);
+    final result = renderWidget(this, context);
+    for (final x in result.childNodes) {
+      if (x is StyleElement2) {
+        context.styles.entries.forEach(
+          (e) => x.childNodes.add(
+            CssTextElement2Impl(
+              e.key,
+              e.value,
+            ),
+          ),
+        );
+        break;
+      }
     }
     return result;
+  }
+
+  @override
+  CssStyleDeclaration2? renderCss(BuildContext context) {
+    return null;
   }
 }
 
@@ -155,11 +136,22 @@ class WidgetRoute {
     required this.builder,
   });
 
-  void head(BuildContext context, HeadElement2Impl head) => //
-      head.childNodes.add(TitleElement2Impl()..text = title(context));
+  Iterable<HtmlElement2> head(BuildContext context) => //
+      [TitleElement2Impl()..text = title(context)];
 
   HtmlElement2 renderHtml(BuildContext context) => //
       builder(context).render(context);
+}
+
+String mediaClassForMediaSize(List<MediaSize> all, MediaSize size) {
+  final index = all.indexOf(size);
+  assert(index != -1, "The given size $size was not in $all");
+  return [
+    '@media all and ${'(min-width: ${Breakpoint.defaultBreakpointSize(size)}px)'}${index + 1 >= all.length ? "" : " and (max-width: ${Breakpoint.defaultBreakpointSize(all[index + 1]) - 1}px)"} {',
+    for (final current in all) //
+      '  .size${current.index} { display: ${size == current ? "block" : "none"}; }',
+    '} \n',
+  ].join("\n");
 }
 
 const baseCss = '''

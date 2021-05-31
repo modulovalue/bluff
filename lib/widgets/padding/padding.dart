@@ -8,7 +8,7 @@ import '../widget/impl/widget_mixin.dart';
 import '../widget/interface/build_context.dart';
 import '../widget/interface/widget.dart';
 
-class Padding with WidgetMixin {
+class Padding implements Widget {
   final Widget? child;
   final EdgeInsets? padding;
   @override
@@ -38,4 +38,7 @@ class Padding with WidgetMixin {
       return child!.render(context);
     }
   }
+
+  @override
+  HtmlElement2 render(BuildContext context) => renderWidget(this, context);
 }

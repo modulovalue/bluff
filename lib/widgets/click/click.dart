@@ -1,4 +1,5 @@
 import '../../base/keys.dart';
+import '../../css/interface/css.dart';
 import '../../html/impl/html.dart';
 import '../../html/interface/html.dart';
 import '../widget/impl/resolve_url.dart';
@@ -8,7 +9,7 @@ import '../widget/interface/widget.dart';
 
 enum ClickState { inactive, hover, active }
 
-class Click with WidgetMixin {
+class Click implements Widget {
   final String url;
   final Widget Function(BuildContext context, ClickState value) builder;
   final bool newTab;
@@ -41,4 +42,10 @@ class Click with WidgetMixin {
     result.childNodes.add(hover);
     return result;
   }
+
+  @override
+  HtmlElement2 render(BuildContext context) => renderWidget(this, context);
+
+  @override
+  CssStyleDeclaration2? renderCss(BuildContext context) => null;
 }

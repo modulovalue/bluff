@@ -4,7 +4,7 @@ import '../widget/impl/widget_mixin.dart';
 import '../widget/interface/build_context.dart';
 import '../widget/interface/widget.dart';
 
-abstract class StatelessWidget with WidgetMixin {
+abstract class StatelessWidget implements Widget {
   @override
   final Key? key;
 
@@ -14,4 +14,10 @@ abstract class StatelessWidget with WidgetMixin {
 
   @override
   HtmlElement2 renderHtml(BuildContext context) => build(context).render(context);
+
+  @override
+  HtmlElement2 render(BuildContext context) => renderWidget(this, context);
+
+  @override
+  Null renderCss(BuildContext context) => null;
 }

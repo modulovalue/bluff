@@ -9,28 +9,9 @@ import '../../html/interface/html.dart';
 import '../theme/theme.dart';
 import '../widget/impl/widget_mixin.dart';
 import '../widget/interface/build_context.dart';
+import '../widget/interface/widget.dart';
 
-class Text with WidgetMixin {
-  /// Creates a text widget.
-  ///
-  /// If the [style] argument is null, the text will use the style from the
-  /// closest enclosing DefaultTextStyle.
-  ///
-  /// The [data] parameter must not be null.
-  const Text(
-    this.data, {
-    this.style,
-    this.strutStyle,
-    this.textAlign,
-    this.textDirection,
-    this.locale,
-    this.softWrap,
-    this.overflow,
-    this.textScaleFactor,
-    this.maxLines,
-    this.key,
-  });
-
+class Text implements Widget {
   @override
   final Key? key;
 
@@ -107,21 +88,36 @@ class Text with WidgetMixin {
   /// widget directly to entirely override the DefaultTextStyle.
   final int? maxLines;
 
+  /// Creates a text widget.
+  ///
+  /// If the [style] argument is null, the text will use the style from the
+  /// closest enclosing DefaultTextStyle.
+  ///
+  /// The [data] parameter must not be null.
+  const Text(
+    this.data, {
+    this.style,
+    this.strutStyle,
+    this.textAlign,
+    this.textDirection,
+    this.locale,
+    this.softWrap,
+    this.overflow,
+    this.textScaleFactor,
+    this.maxLines,
+    this.key,
+  });
+
   @override
   HtmlElement2 renderHtml(BuildContext context) {
-    final result = ParagraphElement2Impl();
     final lines = data.split('\n');
-    result.childNodes.addAll([
-      TextElement2Impl(lines.first),
-      if (lines.length > 1)
-        ...lines.skip(1).expand(
-              (x) => [
-                BRElement2Impl(),
-                TextElement2Impl(x),
-              ],
-            ),
-    ]);
-    return result;
+    return ParagraphElement2Impl()
+      ..childNodes.addAll(
+        [
+          RawTextElement2Impl(lines.first),
+          // if (lines.length > 1) ...lines.skip(1).expand((x) => [BRElement2Impl(), TextElement2Impl(x)]),
+        ],
+      );
   }
 
   @override
@@ -153,11 +149,9 @@ class Text with WidgetMixin {
           break;
       }
     }
-
     if (textStyles.height != null) {
       style.lineHeight = '${textStyles.height}';
     }
-
     style.display = 'flex';
     style.fontSize = (textStyles.fontSize ?? 12).toString();
     style.color = (textStyles.color ?? const Color(0xFF000000)).toCss();
@@ -176,7 +170,9 @@ class Text with WidgetMixin {
       if (textStyles.fontFamily != null) "'" + textStyles.fontFamily! + "'",
       if (textStyles.fontFamilyFallback != null) ...textStyles.fontFamilyFallback!
     ].join(', ');
-
     return style;
   }
+
+  @override
+  HtmlElement2 render(BuildContext context) => renderWidget(this, context);
 }
